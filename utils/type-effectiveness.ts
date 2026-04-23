@@ -37,3 +37,22 @@ export function comparePokemonTypes(leftTypes: PokemonTypeName[], rightTypes: Po
     multiplierAgainstRight: calculateTypeMultiplier(attackType, rightTypes),
   }));
 }
+
+
+export interface BattleInsights {
+  bestOffensiveMultiplier: number;
+  worstDefensiveMultiplier: number;
+}
+
+export function getBattleInsights(attackerTypes: PokemonTypeName[], defenderTypes: PokemonTypeName[]): BattleInsights {
+  const offensiveMultipliers = attackerTypes.map((attackType) => calculateTypeMultiplier(attackType, defenderTypes));
+  const bestOffensiveMultiplier = offensiveMultipliers.length > 0 ? Math.max(...offensiveMultipliers) : 1;
+
+  const incomingMultipliers = ALL_TYPES.map((attackType) => calculateTypeMultiplier(attackType, attackerTypes));
+  const worstDefensiveMultiplier = incomingMultipliers.length > 0 ? Math.max(...incomingMultipliers) : 1;
+
+  return {
+    bestOffensiveMultiplier,
+    worstDefensiveMultiplier,
+  };
+}

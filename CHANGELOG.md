@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-04-23
+
+### Added
+- Added interactive comparer controls with searchable inputs, swap action, and direct query param updates to change Pokémon clearly.
+- Added `getPokemonNameList` service helper to populate comparer suggestions.
+- Added tactical summary blocks in comparer view to surface offensive ceiling and defensive risk.
+- Added implementation notes in `docs/comparer-ux-and-metrics-v0.2.1.md`.
+
+### Changed
+- Redesigned `/compare` to include explicit comparative sections: base stats, tactical summary, type-damage matrix, and direct duel output.
+- Clarified multiplier color semantics so weaknesses and resistances are easier to interpret.
+- Bumped project version from `0.2.0` to `0.2.1`.
+
+### Deprecated
+- No changes in this release.
+
+### Removed
+- No changes in this release.
+
+### Fixed
+- Fixed unclear comparer interaction by providing an on-page mechanism to switch both Pokémon without manual URL edits.
+- Fixed ambiguous comparative output by labeling each metric with clear battle meaning.
+
+### Security
+- No changes in this release.
+
 ## [0.2.0] - 2026-04-23
 
 ### Added

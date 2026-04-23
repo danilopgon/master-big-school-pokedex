@@ -11,6 +11,7 @@ const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
 const DEFAULT_REVALIDATE = 3600;
 
 interface PokeApiListResponse {
+  count: number;
   results: PokemonListResult[];
 }
 
@@ -171,4 +172,10 @@ export async function getPokemonTypes(): Promise<PokemonTypeName[]> {
         "fairy",
       ].includes(name),
     );
+}
+
+
+export async function getPokemonNameList(limit = 1025): Promise<string[]> {
+  const listResponse = await fetchJson<PokeApiListResponse>(`${POKE_API_BASE_URL}/pokemon?offset=0&limit=${limit}`);
+  return listResponse.results.map((pokemon) => pokemon.name);
 }
