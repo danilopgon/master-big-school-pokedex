@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2] - 2026-04-23
+
+### Added
+- Added stricter query validation in `/api/pokemon` with bounded pagination defaults and max page size limits.
+- Added graceful image placeholders in compare, detail, and card views when artwork is unavailable.
+- Added explicit SR-only loading announcement in `app/loading.tsx` for route transition accessibility.
+- Added `POKEMON_TYPE_NAMES` as a single source of truth for Pokémon type runtime values and TS union derivation.
+- Added implementation notes in `docs/coderrabbit-followups-v0.2.2.md`.
+
+### Changed
+- Hardened `/compare` search param normalization to support `string | string[]`, plus lookup failure handling with `notFound()`.
+- Updated compare card keys to include side identifiers and avoid duplicate React keys in mirror matchups.
+- Updated Pokédex infinite scroll to stop re-request loops after empty/error pages by introducing `hasMore` gating.
+- Tightened `next.config.ts` image remote pattern with least-privilege pathname restriction for PokeAPI sprite origin.
+- Bumped project version from `0.2.1` to `0.2.2`.
+
+### Deprecated
+- No changes in this release.
+
+### Removed
+- No changes in this release.
+
+### Fixed
+- Fixed detail route behavior to return 404 via `notFound()` on invalid Pokémon names instead of bubbling fetch errors.
+- Fixed negative stat bar widths by clamping rendered percentages to the 0–100 range.
+- Fixed missing accessible name for the main search field in `PokedexExplorer`.
+
+### Security
+- Reduced image allowlist scope by constraining remote asset pathname in Next.js image config.
+
 ## [0.2.1] - 2026-04-23
 
 ### Added

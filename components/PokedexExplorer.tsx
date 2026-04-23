@@ -11,10 +11,12 @@ interface PokedexExplorerProps {
 }
 
 const PAGE_SIZE = 20;
+const SEARCH_INPUT_ID = "pokemon-search";
 
 export default function PokedexExplorer({ initialPokemon, availableTypes }: PokedexExplorerProps) {
   const [allPokemon, setAllPokemon] = useState<PokemonSummary[]>(initialPokemon);
   const [offset, setOffset] = useState(PAGE_SIZE);
+  const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -31,25 +33,38 @@ export default function PokedexExplorer({ initialPokemon, availableTypes }: Poke
 
   useEffect(() => {
     const currentTarget = observerTarget.current;
-    if (!currentTarget) {
+    if (!currentTarget || !hasMore) {
       return;
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        if (!entry?.isIntersecting || isLoading) {
+        if (!entry?.isIntersecting || isLoading || !hasMore) {
           return;
         }
 
         setIsLoading(true);
         void fetch(`/api/pokemon?offset=${offset}&limit=${PAGE_SIZE}`)
-          .then((response) => response.json() as Promise<PokemonSummary[]>)
-          .then((nextPage) => {
-            if (nextPage.length > 0) {
-              setAllPokemon((previous) => [...previous, ...nextPage]);
-              setOffset((previous) => previous + PAGE_SIZE);
+          .then(async (response) => {
+            if (!response.ok) {
+              setHasMore(false);
+              return [] as PokemonSummary[];
             }
+
+            return (await response.json()) as PokemonSummary[];
+          })
+          .then((nextPage) => {
+            if (nextPage.length === 0) {
+              setHasMore(false);
+              return;
+            }
+
+            setAllPokemon((previous) => [...previous, ...nextPage]);
+            setOffset((previous) => previous + PAGE_SIZE);
+          })
+          .catch(() => {
+            setHasMore(false);
           })
           .finally(() => {
             setIsLoading(false);
@@ -63,7 +78,7 @@ export default function PokedexExplorer({ initialPokemon, availableTypes }: Poke
     return () => {
       observer.disconnect();
     };
-  }, [isLoading, offset]);
+  }, [hasMore, isLoading, offset]);
 
   const filteredPokemon = useMemo(() => {
     return allPokemon.filter((pokemon) => {
@@ -77,7 +92,11 @@ export default function PokedexExplorer({ initialPokemon, availableTypes }: Poke
   return (
     <section className="space-y-6">
       <div className="space-y-4 rounded-xl border border-slate-200 bg-white p-4">
+        <label htmlFor={SEARCH_INPUT_ID} className="text-sm font-semibold text-slate-700">
+          Buscar Pokémon
+        </label>
         <input
+          id={SEARCH_INPUT_ID}
           type="search"
           className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900"
           placeholder="Buscar Pokémon..."
@@ -107,7 +126,7 @@ export default function PokedexExplorer({ initialPokemon, availableTypes }: Poke
         ))}
       </div>
 
-      <div ref={observerTarget} className="h-10" />
+      {hasMore && <div ref={observerTarget} className="h-10" />}
       {isLoading && <p className="text-center text-sm text-slate-500">Cargando más Pokémon...</p>}
     </section>
   );

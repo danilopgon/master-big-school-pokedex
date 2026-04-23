@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import CompareControls from "@/components/CompareControls";
 import PokemonTypeBadge from "@/components/PokemonTypeBadge";
 import { getPokemonByName, getPokemonNameList } from "@/services/pokeapi";
@@ -7,7 +8,7 @@ import { calculateTypeMultiplier, comparePokemonTypes, getBattleInsights } from 
 import type { PokemonDetails, PokemonStat } from "@/types/pokemon";
 
 interface ComparePageProps {
-  searchParams: Promise<{ left?: string; right?: string }>;
+  searchParams: Promise<{ left?: string | string[]; right?: string | string[] }>;
 }
 
 function getMultiplierClass(multiplier: number): string {
@@ -21,13 +22,26 @@ function getTotalBaseStats(pokemon: PokemonDetails): number {
   return pokemon.stats.reduce((sum, stat) => sum + stat.baseStat, 0);
 }
 
-function normalizeSearchValue(value: string | undefined, fallback: string): string {
-  const normalized = value?.trim().toLowerCase();
+function normalizeSearchValue(value: string | string[] | undefined, fallback: string): string {
+  const raw = Array.isArray(value) ? value[0] : value;
+  const normalized = raw?.trim().toLowerCase();
   return normalized && normalized.length > 0 ? normalized : fallback;
 }
 
 function findStatValue(stats: PokemonStat[], name: string): number {
   return stats.find((stat) => stat.name === name)?.baseStat ?? 0;
+}
+
+function PokemonArtwork({ artwork, name, size }: { artwork: string | null; name: string; size: string }) {
+  if (!artwork) {
+    return (
+      <div className="flex h-full w-full items-center justify-center rounded-xl bg-slate-100 text-sm text-slate-500">
+        Sin imagen
+      </div>
+    );
+  }
+
+  return <Image src={artwork} alt={name} fill className="object-contain" sizes={size} />;
 }
 
 const CORE_STATS = ["hp", "attack", "defense", "special-attack", "special-defense", "speed"] as const;
@@ -37,11 +51,19 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
   const left = normalizeSearchValue(query.left, "pikachu");
   const right = normalizeSearchValue(query.right, "charizard");
 
-  const [leftPokemon, rightPokemon, pokemonNames] = await Promise.all([
+  const [leftResult, rightResult, namesResult] = await Promise.allSettled([
     getPokemonByName(left),
     getPokemonByName(right),
     getPokemonNameList(),
   ]);
+
+  if (leftResult.status !== "fulfilled" || rightResult.status !== "fulfilled") {
+    notFound();
+  }
+
+  const leftPokemon = leftResult.value;
+  const rightPokemon = rightResult.value;
+  const names = namesResult.status === "fulfilled" ? namesResult.value : [];
 
   const outcomes = comparePokemonTypes(leftPokemon.types, rightPokemon.types);
   const leftInsights = getBattleInsights(leftPokemon.types, rightPokemon.types);
@@ -56,13 +78,13 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
         </Link>
       </div>
 
-      <CompareControls pokemonNames={pokemonNames} initialLeft={leftPokemon.name} initialRight={rightPokemon.name} />
+      <CompareControls pokemonNames={names} initialLeft={leftPokemon.name} initialRight={rightPokemon.name} />
 
       <section className="grid gap-6 md:grid-cols-2">
-        {[leftPokemon, rightPokemon].map((pokemon) => (
-          <article key={pokemon.name} className="rounded-2xl border border-slate-200 bg-white p-6">
+        {[{ side: "left", pokemon: leftPokemon }, { side: "right", pokemon: rightPokemon }].map(({ side, pokemon }) => (
+          <article key={`${side}-${pokemon.name}`} className="rounded-2xl border border-slate-200 bg-white p-6">
             <div className="relative mx-auto h-44 w-44">
-              <Image src={pokemon.artwork} alt={pokemon.name} fill className="object-contain" sizes="176px" />
+              <PokemonArtwork artwork={pokemon.artwork} name={pokemon.name} size="176px" />
             </div>
             <h2 className="text-center text-2xl font-bold capitalize text-slate-900">{pokemon.name}</h2>
             <div className="mt-3 flex justify-center gap-2">

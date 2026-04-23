@@ -11,7 +11,7 @@ function getBarColor(value: number): string {
 }
 
 export default function StatBar({ label, value }: StatBarProps) {
-  const widthPercent = Math.min(100, Math.round((value / 180) * 100));
+  const widthPercent = Math.max(0, Math.min(100, Math.round((value / 180) * 100)));
 
   return (
     <div className="space-y-1">

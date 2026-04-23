@@ -14,7 +14,13 @@ export default function PokemonCard({ pokemon }: PokemonCardProps) {
       className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
     >
       <div className="relative mx-auto h-36 w-36">
-        <Image src={pokemon.artwork} alt={pokemon.name} fill className="object-contain" sizes="144px" />
+        {pokemon.artwork ? (
+          <Image src={pokemon.artwork} alt={pokemon.name} fill className="object-contain" sizes="144px" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center rounded-xl bg-slate-100 text-sm text-slate-500">
+            Sin imagen
+          </div>
+        )}
       </div>
       <p className="text-sm text-slate-500">#{String(pokemon.id).padStart(4, "0")}</p>
       <h2 className="text-lg font-bold capitalize text-slate-900">{pokemon.name}</h2>

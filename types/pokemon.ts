@@ -1,22 +1,25 @@
-export type PokemonTypeName =
-  | "normal"
-  | "fire"
-  | "water"
-  | "electric"
-  | "grass"
-  | "ice"
-  | "fighting"
-  | "poison"
-  | "ground"
-  | "flying"
-  | "psychic"
-  | "bug"
-  | "rock"
-  | "ghost"
-  | "dragon"
-  | "dark"
-  | "steel"
-  | "fairy";
+export const POKEMON_TYPE_NAMES = [
+  "normal",
+  "fire",
+  "water",
+  "electric",
+  "grass",
+  "ice",
+  "fighting",
+  "poison",
+  "ground",
+  "flying",
+  "psychic",
+  "bug",
+  "rock",
+  "ghost",
+  "dragon",
+  "dark",
+  "steel",
+  "fairy",
+] as const;
+
+export type PokemonTypeName = (typeof POKEMON_TYPE_NAMES)[number];
 
 export interface PokemonListResult {
   name: string;
@@ -32,7 +35,7 @@ export interface PokemonSummary {
   id: number;
   name: string;
   types: PokemonTypeName[];
-  artwork: string;
+  artwork: string | null;
 }
 
 export interface PokemonDetails extends PokemonSummary {
@@ -49,7 +52,7 @@ export interface EvolutionNode {
 
 export interface EvolutionPokemon {
   name: string;
-  artwork: string;
+  artwork: string | null;
 }
 
 export interface ComparisonOutcome {

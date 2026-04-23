@@ -1,10 +1,11 @@
-import type {
-  EvolutionNode,
-  EvolutionPokemon,
-  PokemonDetails,
-  PokemonListResult,
-  PokemonSummary,
-  PokemonTypeName,
+import {
+  POKEMON_TYPE_NAMES,
+  type EvolutionNode,
+  type EvolutionPokemon,
+  type PokemonDetails,
+  type PokemonListResult,
+  type PokemonSummary,
+  type PokemonTypeName,
 } from "@/types/pokemon";
 
 const POKE_API_BASE_URL = "https://pokeapi.co/api/v2";
@@ -51,13 +52,20 @@ interface EvolutionNodeApi {
   evolves_to: EvolutionNodeApi[];
 }
 
-function toPokemonType(typeName: string): PokemonTypeName {
-  return typeName as PokemonTypeName;
+function isPokemonType(typeName: string): typeName is PokemonTypeName {
+  return POKEMON_TYPE_NAMES.includes(typeName as PokemonTypeName);
 }
 
-function getOfficialArtwork(response: PokeApiPokemonResponse): string {
-  const artwork = response.sprites.other?.["official-artwork"]?.front_default;
-  return artwork ?? "";
+function toPokemonType(typeName: string): PokemonTypeName {
+  if (!isPokemonType(typeName)) {
+    throw new Error(`Unknown pokemon type: ${typeName}`);
+  }
+
+  return typeName;
+}
+
+function getOfficialArtwork(response: PokeApiPokemonResponse): string | null {
+  return response.sprites.other?.["official-artwork"]?.front_default ?? null;
 }
 
 function mapPokemonDetails(response: PokeApiPokemonResponse): PokemonDetails {
@@ -148,32 +156,8 @@ export async function getEvolutionChain(name: string): Promise<EvolutionPokemon[
 
 export async function getPokemonTypes(): Promise<PokemonTypeName[]> {
   const typesResponse = await fetchJson<PokeApiTypeListResponse>(`${POKE_API_BASE_URL}/type`);
-  return typesResponse.results
-    .map((type) => type.name)
-    .filter((name): name is PokemonTypeName =>
-      [
-        "normal",
-        "fire",
-        "water",
-        "electric",
-        "grass",
-        "ice",
-        "fighting",
-        "poison",
-        "ground",
-        "flying",
-        "psychic",
-        "bug",
-        "rock",
-        "ghost",
-        "dragon",
-        "dark",
-        "steel",
-        "fairy",
-      ].includes(name),
-    );
+  return typesResponse.results.map((type) => type.name).filter(isPokemonType);
 }
-
 
 export async function getPokemonNameList(limit = 1025): Promise<string[]> {
   const listResponse = await fetchJson<PokeApiListResponse>(`${POKE_API_BASE_URL}/pokemon?offset=0&limit=${limit}`);
