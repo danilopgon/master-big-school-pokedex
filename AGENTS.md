@@ -11,7 +11,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 Este documento define las reglas de comportamiento, estándares de código y arquitectura que el Asistente de IA debe seguir estrictamente para este proyecto.
 
 ## 1. Stack Tecnológico y Contexto
-- **Framework:** Next.js 15+ (App Router).
+- **Framework:** Next.js 16+ (App Router).
 - **Lenguaje:** TypeScript (Strict Mode).
 - **Estilos:** Tailwind CSS.
 - **API:** PokeAPI (v2).
