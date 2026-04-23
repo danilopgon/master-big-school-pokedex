@@ -19,35 +19,38 @@ Este documento define las reglas de comportamiento, estándares de código y arq
 - **Imágenes:** Componente `next/image` con dominios configurados para `raw.githubusercontent.com`.
 
 ## 2. Reglas de Arquitectura
-- **Server First:** Todo componente es un Server Component por defecto. Solo usar `'use client'` cuando haya interactividad (hooks, eventos, formularios).
+- **Server First:** Todo componente es un Server Component por defecto. Solo usar `'use client'` cuando haya interactividad.
 - **Estructura de Carpetas:**
     - `app/`: Rutas, layouts, loading y error states.
-    - `components/`: Componentes UI atómicos (PokemonCard, TypeBadge, etc.).
-    - `services/`: Lógica de peticiones (ej. `getPokemonList`, `getPokemonDetails`).
-    - `types/`: Interfaces de TypeScript para las respuestas de la API.
-    - `utils/`: Funciones auxiliares (formateo de IDs, colores por tipo).
+    - `components/`: Componentes UI atómicos.
+    - `services/`: Lógica de peticiones (ej. `getPokemonList`).
+    - `types/`: Interfaces de TypeScript.
+    - `utils/`: Funciones auxiliares.
+    - `docs/`: Documentación técnica de cada implementación.
 
 ## 3. Estándares de Código (TypeScript & Clean Code)
-- **Tipado Estricto:** Prohibido el uso de `any`. Definir interfaces precisas para los datos de la PokeAPI.
-- **Componentes Funcionales:** Usar la sintaxis `export default function Name() { ... }`.
-- **Naming Conventions:**
-    - Componentes: `PascalCase` (`PokemonList.tsx`).
-    - Funciones/Variables: `camelCase`.
-    - Carpetas de rutas: `kebab-case`.
-- **Rendimiento:** Siempre usar `Promise.all` al realizar múltiples peticiones en un mismo componente para evitar bloqueos de renderizado (waterfalls).
+- **Tipado Estricto:** Prohibido el uso de `any`.
+- **Componentes Funcionales:** Usar `export default function Name() { ... }`.
+- **Rendimiento:** Siempre usar `Promise.all` para peticiones múltiples simultáneas.
 
 ## 4. Reglas de UI/UX (Tailwind CSS)
 - **Diseño Responsivo:** Enfoque Mobile-first.
-- **Colores Temáticos:** Implementar un mapeo de colores basado en los tipos de Pokémon (ej. fire: `bg-orange-500`, water: `bg-blue-500`).
-- **Accesibilidad:** Uso de etiquetas semánticas (`main`, `section`, `article`) y soporte para lectores de pantalla.
-- **Feedback Visual:** Implementar Skeleton Screens en los archivos `loading.tsx` para mejorar la percepción de velocidad.
+- **Colores Temáticos:** Mapeo de colores basado en tipos de Pokémon.
+- **Feedback Visual:** Implementar Skeleton Screens en `loading.tsx`.
 
 ## 5. Patrones de Fetching (PokeAPI)
-- **Cache:** Utilizar la opción `next: { revalidate: 3600 }` para datos que no cambian frecuentemente.
-- **Optimización de Imágenes:** Usar los sprites de alta calidad ("official-artwork" o "home").
-- **Paginación:** Implementar paginación mediante URL params (`?page=1`).
+- **Cache:** Utilizar `next: { revalidate: 3600 }` donde sea posible.
+- **Optimización de Imágenes:** Usar sprites de alta calidad ("official-artwork").
 
-## 6. Comportamiento del Asistente
-- **Concisión:** Explicaciones breves antes de bloques de código.
-- **Validación:** Antes de entregar código, verificar que cumple con las reglas de este archivo.
-- **Enfoque en Aprendizaje:** Explicar el "porqué" de las decisiones técnicas (especialmente sobre Server Components).
+## 6. Documentación Obligatoria (Carpeta /docs)
+- **Registro de Implementación:** Cualquier nueva funcionalidad, cambio de lógica o configuración debe ser documentada en un archivo Markdown dentro de la carpeta `docs/`.
+- **Contenido:** Los documentos deben incluir el "qué", el "cómo" y el "porqué" de las decisiones técnicas.
+
+## 7. Versionado y Control de Cambios
+- **package.json:** En cada cambio de código o nueva funcionalidad, el asistente debe aumentar la versión (patch, minor o major según corresponda).
+- **CHANGELOG.md:** Todo cambio debe verse reflejado en el archivo `CHANGELOG.md` en la raíz, siguiendo estrictamente el estándar de [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
+    - Secciones: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`.
+
+## 8. Comportamiento del Asistente
+- **Validación previa:** Antes de entregar código, verificar cumplimiento de todas las reglas de este archivo.
+- **Proactividad en registros:** Al finalizar una tarea, el asistente debe generar automáticamente el texto para el CHANGELOG y la documentación en `/docs`.

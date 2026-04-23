@@ -1,0 +1,1836 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PokéAPI v2 - Core Endpoints (Unofficial OpenAPI)",
+    "version": "1.0.0",
+    "summary": "OpenAPI JSON for the most important PokéAPI v2 endpoints.",
+    "description": "This is an unofficial OpenAPI 3.1 document generated from the PokéAPI v2 documentation. It focuses on the core read-only endpoints most commonly used in apps and demos, rather than trying to model every field in every resource.",
+    "contact": {
+      "name": "PokéAPI",
+      "url": "https://pokeapi.co/docs/v2"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://pokeapi.co/api/v2"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Pokemon"
+    },
+    {
+      "name": "Abilities"
+    },
+    {
+      "name": "Types"
+    },
+    {
+      "name": "Moves"
+    },
+    {
+      "name": "Evolution"
+    },
+    {
+      "name": "Items"
+    },
+    {
+      "name": "Games"
+    }
+  ],
+  "paths": {
+    "/pokemon/": {
+      "get": {
+        "tags": [
+          "Pokemon"
+        ],
+        "summary": "List Pokemon",
+        "description": "List Pokémon resources using the standard named paginated PokéAPI format.",
+        "operationId": "List_Pokemon",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NamedAPIResourceList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pokemon/{idOrName}/": {
+      "get": {
+        "tags": [
+          "Pokemon"
+        ],
+        "summary": "Get Pokemon",
+        "description": "Get a Pokémon by numeric id or name.",
+        "operationId": "Get_Pokemon",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idOrName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pokemon"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/pokemon-species/": {
+      "get": {
+        "tags": [
+          "Pokemon"
+        ],
+        "summary": "List Pokemon Species",
+        "description": "List Pokémon species resources.",
+        "operationId": "List_Pokemon_Species",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NamedAPIResourceList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pokemon-species/{idOrName}/": {
+      "get": {
+        "tags": [
+          "Pokemon"
+        ],
+        "summary": "Get Pokemon Species",
+        "description": "Get Pokémon species metadata shared across varieties.",
+        "operationId": "Get_Pokemon_Species",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idOrName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PokemonSpecies"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/ability/": {
+      "get": {
+        "tags": [
+          "Abilities"
+        ],
+        "summary": "List Abilities",
+        "description": "List ability resources.",
+        "operationId": "List_Abilities",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NamedAPIResourceList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ability/{idOrName}/": {
+      "get": {
+        "tags": [
+          "Abilities"
+        ],
+        "summary": "Get Ability",
+        "description": "Get an ability by numeric id or name.",
+        "operationId": "Get_Ability",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idOrName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ability"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/type/": {
+      "get": {
+        "tags": [
+          "Types"
+        ],
+        "summary": "List Types",
+        "description": "List type resources.",
+        "operationId": "List_Types",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NamedAPIResourceList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/type/{idOrName}/": {
+      "get": {
+        "tags": [
+          "Types"
+        ],
+        "summary": "Get Type",
+        "description": "Get a type, including damage relations.",
+        "operationId": "Get_Type",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idOrName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Type"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/move/": {
+      "get": {
+        "tags": [
+          "Moves"
+        ],
+        "summary": "List Moves",
+        "description": "List move resources.",
+        "operationId": "List_Moves",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NamedAPIResourceList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/move/{idOrName}/": {
+      "get": {
+        "tags": [
+          "Moves"
+        ],
+        "summary": "Get Move",
+        "description": "Get a move by numeric id or name.",
+        "operationId": "Get_Move",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idOrName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Move"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/item/": {
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "List Items",
+        "description": "List item resources.",
+        "operationId": "List_Items",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NamedAPIResourceList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/item/{idOrName}/": {
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Get Item",
+        "description": "Get an item by numeric id or name.",
+        "operationId": "Get_Item",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idOrName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Item"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/pokedex/": {
+      "get": {
+        "tags": [
+          "Games"
+        ],
+        "summary": "List Pokedexes",
+        "description": "List Pokédex resources.",
+        "operationId": "List_Pokedexes",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NamedAPIResourceList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pokedex/{idOrName}/": {
+      "get": {
+        "tags": [
+          "Games"
+        ],
+        "summary": "Get Pokedex",
+        "description": "Get a Pokédex by numeric id or name.",
+        "operationId": "Get_Pokedex",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idOrName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pokedex"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/evolution-chain/": {
+      "get": {
+        "tags": [
+          "Evolution"
+        ],
+        "summary": "List Evolution Chains",
+        "description": "List evolution chains using the unnamed paginated PokéAPI format.",
+        "operationId": "List_Evolution_Chains",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APIResourceList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/evolution-chain/{id}/": {
+      "get": {
+        "tags": [
+          "Evolution"
+        ],
+        "summary": "Get Evolution Chain",
+        "description": "Get an evolution chain by numeric id.",
+        "operationId": "Get_Evolution_Chain",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvolutionChain"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "Page size. PokéAPI defaults to 20 items per page.",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 20
+        }
+      },
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "description": "Pagination offset.",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        }
+      },
+      "idOrName": {
+        "name": "idOrName",
+        "in": "path",
+        "description": "Resource identifier or canonical name.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "id": {
+        "name": "id",
+        "in": "path",
+        "description": "Numeric resource identifier.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "schemas": {
+      "NamedAPIResource": {
+        "type": "object",
+        "required": [
+          "name",
+          "url"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "additionalProperties": false
+      },
+      "APIResource": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LanguageName": {
+        "type": "object",
+        "required": [
+          "name",
+          "language"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "language": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "VerboseEffect": {
+        "type": "object",
+        "required": [
+          "effect",
+          "short_effect",
+          "language"
+        ],
+        "properties": {
+          "effect": {
+            "type": "string"
+          },
+          "short_effect": {
+            "type": "string"
+          },
+          "language": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "Description": {
+        "type": "object",
+        "required": [
+          "description",
+          "language"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "language": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "FlavorText": {
+        "type": "object",
+        "required": [
+          "flavor_text",
+          "language",
+          "version"
+        ],
+        "properties": {
+          "flavor_text": {
+            "type": "string"
+          },
+          "language": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "version": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "NamedAPIResourceList": {
+        "type": "object",
+        "required": [
+          "count",
+          "next",
+          "previous",
+          "results"
+        ],
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
+          "previous": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          }
+        }
+      },
+      "APIResourceList": {
+        "type": "object",
+        "required": [
+          "count",
+          "next",
+          "previous",
+          "results"
+        ],
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
+          "previous": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIResource"
+            }
+          }
+        }
+      },
+      "PokemonAbility": {
+        "type": "object",
+        "required": [
+          "is_hidden",
+          "slot",
+          "ability"
+        ],
+        "properties": {
+          "is_hidden": {
+            "type": "boolean"
+          },
+          "slot": {
+            "type": "integer"
+          },
+          "ability": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "PokemonType": {
+        "type": "object",
+        "required": [
+          "slot",
+          "type"
+        ],
+        "properties": {
+          "slot": {
+            "type": "integer"
+          },
+          "type": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "PokemonStat": {
+        "type": "object",
+        "required": [
+          "base_stat",
+          "effort",
+          "stat"
+        ],
+        "properties": {
+          "base_stat": {
+            "type": "integer"
+          },
+          "effort": {
+            "type": "integer"
+          },
+          "stat": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "PokemonSprites": {
+        "type": "object",
+        "properties": {
+          "front_default": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
+          "front_shiny": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
+          "back_default": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          },
+          "back_shiny": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri"
+          }
+        },
+        "additionalProperties": true
+      },
+      "Pokemon": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "base_experience",
+          "height",
+          "is_default",
+          "order",
+          "weight",
+          "abilities",
+          "species",
+          "sprites",
+          "stats",
+          "types"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "base_experience": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "height": {
+            "type": "integer"
+          },
+          "is_default": {
+            "type": "boolean"
+          },
+          "order": {
+            "type": "integer"
+          },
+          "weight": {
+            "type": "integer"
+          },
+          "abilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PokemonAbility"
+            }
+          },
+          "forms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          },
+          "species": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "sprites": {
+            "$ref": "#/components/schemas/PokemonSprites"
+          },
+          "stats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PokemonStat"
+            }
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PokemonType"
+            }
+          }
+        }
+      },
+      "AbilityEffectChange": {
+        "type": "object",
+        "required": [
+          "effect_entries",
+          "version_group"
+        ],
+        "properties": {
+          "effect_entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VerboseEffect"
+            }
+          },
+          "version_group": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "AbilityPokemon": {
+        "type": "object",
+        "required": [
+          "is_hidden",
+          "slot",
+          "pokemon"
+        ],
+        "properties": {
+          "is_hidden": {
+            "type": "boolean"
+          },
+          "slot": {
+            "type": "integer"
+          },
+          "pokemon": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "Ability": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "is_main_series",
+          "generation",
+          "names",
+          "effect_entries",
+          "effect_changes",
+          "pokemon"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "is_main_series": {
+            "type": "boolean"
+          },
+          "generation": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "names": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LanguageName"
+            }
+          },
+          "effect_entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VerboseEffect"
+            }
+          },
+          "effect_changes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AbilityEffectChange"
+            }
+          },
+          "pokemon": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AbilityPokemon"
+            }
+          }
+        }
+      },
+      "TypeRelations": {
+        "type": "object",
+        "required": [
+          "no_damage_to",
+          "half_damage_to",
+          "double_damage_to",
+          "no_damage_from",
+          "half_damage_from",
+          "double_damage_from"
+        ],
+        "properties": {
+          "no_damage_to": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          },
+          "half_damage_to": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          },
+          "double_damage_to": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          },
+          "no_damage_from": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          },
+          "half_damage_from": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          },
+          "double_damage_from": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          }
+        }
+      },
+      "TypePokemon": {
+        "type": "object",
+        "required": [
+          "slot",
+          "pokemon"
+        ],
+        "properties": {
+          "slot": {
+            "type": "integer"
+          },
+          "pokemon": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "Type": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "damage_relations",
+          "moves",
+          "pokemon"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "damage_relations": {
+            "$ref": "#/components/schemas/TypeRelations"
+          },
+          "moves": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          },
+          "pokemon": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TypePokemon"
+            }
+          }
+        }
+      },
+      "MoveMetaData": {
+        "type": "object",
+        "properties": {
+          "ailment": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "category": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "min_hits": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "max_hits": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "min_turns": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "max_turns": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "drain": {
+            "type": "integer"
+          },
+          "healing": {
+            "type": "integer"
+          },
+          "crit_rate": {
+            "type": "integer"
+          },
+          "ailment_chance": {
+            "type": "integer"
+          },
+          "flinch_chance": {
+            "type": "integer"
+          },
+          "stat_chance": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": true
+      },
+      "Move": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "accuracy",
+          "effect_chance",
+          "pp",
+          "priority",
+          "power",
+          "damage_class",
+          "effect_entries",
+          "generation",
+          "meta",
+          "target",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "accuracy": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "effect_chance": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "pp": {
+            "type": "integer"
+          },
+          "priority": {
+            "type": "integer"
+          },
+          "power": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "damage_class": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "effect_entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VerboseEffect"
+            }
+          },
+          "generation": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MoveMetaData"
+          },
+          "target": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "type": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "EvolutionDetail": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "trigger": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "gender": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "held_item": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "known_move": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "known_move_type": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "location": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "min_level": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "min_happiness": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "min_beauty": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "min_affection": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "needs_overworld_rain": {
+            "type": "boolean"
+          },
+          "party_species": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "party_type": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "relative_physical_stats": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "time_of_day": {
+            "type": "string"
+          },
+          "trade_species": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "turn_upside_down": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true
+      },
+      "ChainLink": {
+        "type": "object",
+        "required": [
+          "is_baby",
+          "species",
+          "evolves_to"
+        ],
+        "properties": {
+          "is_baby": {
+            "type": "boolean"
+          },
+          "species": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "evolution_details": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EvolutionDetail"
+                }
+              }
+            ]
+          },
+          "evolves_to": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChainLink"
+            }
+          }
+        }
+      },
+      "EvolutionChain": {
+        "type": "object",
+        "required": [
+          "id",
+          "baby_trigger_item",
+          "chain"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "baby_trigger_item": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "chain": {
+            "$ref": "#/components/schemas/ChainLink"
+          }
+        }
+      },
+      "PokedexNumber": {
+        "type": "object",
+        "required": [
+          "entry_number",
+          "pokedex"
+        ],
+        "properties": {
+          "entry_number": {
+            "type": "integer"
+          },
+          "pokedex": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "Genus": {
+        "type": "object",
+        "required": [
+          "genus",
+          "language"
+        ],
+        "properties": {
+          "genus": {
+            "type": "string"
+          },
+          "language": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "PokemonSpeciesVariety": {
+        "type": "object",
+        "required": [
+          "is_default",
+          "pokemon"
+        ],
+        "properties": {
+          "is_default": {
+            "type": "boolean"
+          },
+          "pokemon": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "PokemonSpecies": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "order",
+          "gender_rate",
+          "capture_rate",
+          "base_happiness",
+          "is_baby",
+          "is_legendary",
+          "is_mythical",
+          "hatch_counter",
+          "has_gender_differences",
+          "forms_switchable",
+          "growth_rate",
+          "pokedex_numbers",
+          "egg_groups",
+          "color",
+          "shape",
+          "evolution_chain",
+          "generation",
+          "names",
+          "flavor_text_entries",
+          "genera",
+          "varieties"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "order": {
+            "type": "integer"
+          },
+          "gender_rate": {
+            "type": "integer"
+          },
+          "capture_rate": {
+            "type": "integer"
+          },
+          "base_happiness": {
+            "type": "integer"
+          },
+          "is_baby": {
+            "type": "boolean"
+          },
+          "is_legendary": {
+            "type": "boolean"
+          },
+          "is_mythical": {
+            "type": "boolean"
+          },
+          "hatch_counter": {
+            "type": "integer"
+          },
+          "has_gender_differences": {
+            "type": "boolean"
+          },
+          "forms_switchable": {
+            "type": "boolean"
+          },
+          "growth_rate": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "pokedex_numbers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PokedexNumber"
+            }
+          },
+          "egg_groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          },
+          "color": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "shape": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evolves_from_species": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evolution_chain": {
+            "type": "object",
+            "required": [
+              "url"
+            ],
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          },
+          "habitat": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "generation": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "names": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LanguageName"
+            }
+          },
+          "flavor_text_entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FlavorText"
+            }
+          },
+          "genera": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Genus"
+            }
+          },
+          "varieties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PokemonSpeciesVariety"
+            }
+          }
+        }
+      },
+      "ItemHeldByPokemonVersionDetail": {
+        "type": "object",
+        "required": [
+          "rarity",
+          "version"
+        ],
+        "properties": {
+          "rarity": {
+            "type": "integer"
+          },
+          "version": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "ItemHeldByPokemon": {
+        "type": "object",
+        "required": [
+          "pokemon",
+          "version_details"
+        ],
+        "properties": {
+          "pokemon": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "version_details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemHeldByPokemonVersionDetail"
+            }
+          }
+        }
+      },
+      "ItemSprites": {
+        "type": "object",
+        "properties": {
+          "default": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "Item": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "cost",
+          "fling_power",
+          "attributes",
+          "category",
+          "effect_entries",
+          "flavor_text_entries",
+          "game_indices",
+          "names",
+          "sprites",
+          "held_by_pokemon"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "cost": {
+            "type": "integer"
+          },
+          "fling_power": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "fling_effect": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          },
+          "category": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          },
+          "effect_entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VerboseEffect"
+            }
+          },
+          "flavor_text_entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FlavorText"
+            }
+          },
+          "game_indices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "game_index",
+                "generation"
+              ],
+              "properties": {
+                "game_index": {
+                  "type": "integer"
+                },
+                "generation": {
+                  "$ref": "#/components/schemas/NamedAPIResource"
+                }
+              }
+            }
+          },
+          "names": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LanguageName"
+            }
+          },
+          "sprites": {
+            "$ref": "#/components/schemas/ItemSprites"
+          },
+          "held_by_pokemon": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemHeldByPokemon"
+            }
+          }
+        }
+      },
+      "PokedexEntry": {
+        "type": "object",
+        "required": [
+          "entry_number",
+          "pokemon_species"
+        ],
+        "properties": {
+          "entry_number": {
+            "type": "integer"
+          },
+          "pokemon_species": {
+            "$ref": "#/components/schemas/NamedAPIResource"
+          }
+        }
+      },
+      "Pokedex": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "is_main_series",
+          "descriptions",
+          "names",
+          "pokemon_entries",
+          "region",
+          "version_groups"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "is_main_series": {
+            "type": "boolean"
+          },
+          "descriptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Description"
+            }
+          },
+          "names": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LanguageName"
+            }
+          },
+          "pokemon_entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PokedexEntry"
+            }
+          },
+          "region": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/NamedAPIResource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "version_groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NamedAPIResource"
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "description": "PokéAPI does not publish a formal error schema in the v2 docs; this placeholder is included for tooling compatibility.",
+        "additionalProperties": true
+      }
+    },
+    "responses": {
+      "NotFound": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  }
+}
