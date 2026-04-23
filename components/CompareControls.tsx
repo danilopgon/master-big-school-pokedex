@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface CompareControlsProps {
@@ -18,6 +18,16 @@ export default function CompareControls({ pokemonNames, initialLeft, initialRigh
   const searchParams = useSearchParams();
   const [leftValue, setLeftValue] = useState(initialLeft);
   const [rightValue, setRightValue] = useState(initialRight);
+
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      setLeftValue(initialLeft);
+      setRightValue(initialRight);
+    }, 0);
+
+    return () => window.clearTimeout(timeout);
+  }, [initialLeft, initialRight]);
 
   const submitComparison = (left: string, right: string): void => {
     const normalizedLeft = sanitizePokemonName(left);

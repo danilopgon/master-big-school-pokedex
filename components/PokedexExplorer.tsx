@@ -107,13 +107,26 @@ export default function PokedexExplorer({ initialPokemon, availableTypes }: Poke
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
-            className="rounded-full border border-slate-300 px-3 py-1 text-xs font-semibold uppercase text-slate-700"
+            className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase transition ${
+              selectedType === "all"
+                ? "border-slate-900 bg-slate-900 text-white"
+                : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+            }`}
             onClick={() => setSelectedType("all")}
           >
             Todos
           </button>
           {availableTypes.map((type) => (
-            <button key={type} type="button" onClick={() => setSelectedType(type)}>
+            <button
+              key={type}
+              type="button"
+              onClick={() => setSelectedType(type)}
+              className={`rounded-full border px-1 py-1 transition ${
+                selectedType === type
+                  ? "border-slate-900 bg-slate-900/10"
+                  : "border-transparent hover:border-slate-300"
+              }`}
+            >
               <PokemonTypeBadge type={type} />
             </button>
           ))}

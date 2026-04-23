@@ -179,7 +179,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
         <h2 className="mb-4 text-xl font-bold text-slate-900">Duelo directo entre sus tipos</h2>
         <div className="grid gap-3 md:grid-cols-2">
           {leftPokemon.types.map((attackType) => (
-            <div key={attackType} className="rounded-lg bg-slate-50 p-3 text-sm">
+            <div key={`left-${attackType}`} className="rounded-lg bg-slate-50 p-3 text-sm">
               <p className="font-medium text-slate-800">
                 {leftPokemon.name} ({attackType}) → {rightPokemon.name}: x
                 {calculateTypeMultiplier(attackType, rightPokemon.types)}
@@ -187,7 +187,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
             </div>
           ))}
           {rightPokemon.types.map((attackType) => (
-            <div key={attackType} className="rounded-lg bg-slate-50 p-3 text-sm">
+            <div key={`right-${attackType}`} className="rounded-lg bg-slate-50 p-3 text-sm">
               <p className="font-medium text-slate-800">
                 {rightPokemon.name} ({attackType}) → {leftPokemon.name}: x
                 {calculateTypeMultiplier(attackType, leftPokemon.types)}

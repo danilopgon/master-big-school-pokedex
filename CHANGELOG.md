@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.3] - 2026-04-23
+
+### Added
+- Added prop-to-state resync in comparer controls so selected Pokémon inputs stay aligned after URL/navigation updates.
+- Added visual active states for type filters in the Pokédex explorer (including "Todos").
+- Added implementation notes in `docs/coderrabbit-followups-v0.2.3.md`.
+
+### Changed
+- Updated direct-duel key generation in `/compare` to include side prefixes (`left-`/`right-`) for fully unique React keys.
+- Bumped project version from `0.2.2` to `0.2.3`.
+
+### Deprecated
+- No changes in this release.
+
+### Removed
+- No changes in this release.
+
+### Fixed
+- Fixed stale comparer input values when `initialLeft`/`initialRight` props changed.
+- Fixed potential key collisions in compare direct-duel rows when both Pokémon share a type.
+
+### Security
+- No changes in this release.
+
 ## [0.2.2] - 2026-04-23
 
 ### Added
